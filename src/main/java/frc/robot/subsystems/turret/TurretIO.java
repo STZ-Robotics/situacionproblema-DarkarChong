@@ -8,14 +8,25 @@ import edu.wpi.first.math.geometry.Rotation2d;
 @Fallback
 public interface TurretIO extends IO<TurretIO.TurretInputs> {
 
-    class TurretInputs extends Data<TurretInputs> {
+      class TurretInputs extends Data<TurretInputs> {
         public Rotation2d angle = new Rotation2d();
         public Rotation2d targetAngle = new Rotation2d();
         public double velocityRPS = 0.0;
         public double appliedVolts = 0.0;
         public double current = 0.0;
 
-        
+        @Override
+        public TurretInputs snapshot() {
+            TurretInputs clone = new TurretInputs();
+            clone.timestamp    = this.timestamp;   
+            clone.key          = this.key;
+            clone.angle        = this.angle;
+            clone.targetAngle  = this.targetAngle;
+            clone.velocityRPS  = this.velocityRPS;
+            clone.appliedVolts = this.appliedVolts;
+            clone.current      = this.current;
+            return clone;
+        }
     }
 
     default void updateInputs(TurretInputs inputs) {}
